@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import Grid from "./Grid";
 import InfoLabel from "./InfoLabel";
 import {checkWinner} from "../utils/checkWinner";
+import {handleMove} from "../utils/handleMove";
 
 interface GameProps {
   player1: string
@@ -23,19 +24,12 @@ const Game = (props: GameProps) => {
     return grid[columnIndex].length >= NB_ROWS
   }
 
-  const handleMove = (columnIndex: number) => {
-    console.log(grid)
+  const onMove = (columnIndex: number) => {
     if (winner === '') {
       if (isColumnFull(columnIndex)) return
 
       if (currentPlayer) {
-        const newGrid = grid.map((column, index) => {
-          if (index === columnIndex) {
-            return [...column, currentPlayer]
-          }
-          return column
-        })
-
+        const newGrid = handleMove(grid, currentPlayer, columnIndex);
         setGrid(newGrid)
         setCurrentPlayer(currentPlayer === 'red' ? 'blue' : 'red')
       }
@@ -52,7 +46,7 @@ const Game = (props: GameProps) => {
 
   return (
     <div>
-      <Grid nbRows={NB_ROWS} nbColumns={NB_COLUMNS} currentGrid={grid} onMove={handleMove}></Grid>
+      <Grid nbRows={NB_ROWS} nbColumns={NB_COLUMNS} currentGrid={grid} onMove={onMove}></Grid>
       <InfoLabel currentPlayer={currentPlayer === 'red' ? player1 : player2} winner={winner !== '' ? winner : null} />
     </div>
   )

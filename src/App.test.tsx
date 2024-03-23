@@ -5,24 +5,26 @@ import Menu from './menu/Menu'
 import Game from './game/components/Game'
 import {checkWinner} from "./game/utils/checkWinner";
 import InfoLabel from "./game/components/InfoLabel";
+import {handleMove} from "./game/utils/handleMove";
 
 describe('Tous les tests', () => {
-  test('Title is displayed', () => {
+  test('Le titre est affiché', () => {
     const {getByText} = render(<App/>)
     const linkElement = getByText(/Puissance 4/i)
     expect(linkElement).toBeInTheDocument()
   })
 
   describe('Menu tests', () => {
-    test('Menu affiche les champs pour les pseudos', () => {
+    test('Menu lance la partie avec le bon nom des joueurs', () => {
       const handleStartGame = jest.fn()
-      const {getByPlaceholderText} = render(<Menu onStartGame={handleStartGame}/>)
+      const {getByPlaceholderText, getByText} = render(<Menu onStartGame={handleStartGame}/>)
+      const button = getByText('Lancer la partie')
       const input1 = getByPlaceholderText('Pseudo joueur 1') as HTMLInputElement
       const input2 = getByPlaceholderText('Pseudo joueur 2') as HTMLInputElement
       fireEvent.change(input1, {target: {value: 'Player 1'}})
       fireEvent.change(input2, {target: {value: 'Player 2'}})
-      expect(input1.value).toBe('Player 1')
-      expect(input2.value).toBe('Player 2')
+      fireEvent.click(button)
+      expect(handleStartGame).toHaveBeenCalledWith('Player 1', 'Player 2')
     })
   })
 
@@ -31,6 +33,22 @@ describe('Tous les tests', () => {
       const {getByText} = render(<Game player1="Player 1" player2="Player 2"/>)
       const playerTurn = getByText("C'est au tour de Player 1")
       expect(playerTurn).toBeInTheDocument()
+    })
+
+    test("On n'autorisera pas le joueur à jouer dans une colonne pleine", () => {
+      //chaque ligne représente une colonne (il faut lire en faisant une rotation de 90 degrés vers la gauche)
+      const grid = [
+        ['red', 'blue', 'red', 'blue', 'red', 'blue'],
+        ['', '', '', '', '', ''],
+        ['blue', 'red', '', '', '', ''],
+        ['blue', '', '', '', '', ''],
+        ['red', '', '', '', '', ''],
+        ['', '', '', '', '', ''],
+        ['', '', '', '', '', '']
+      ]
+      const newGrid = handleMove(grid, 'red', 0)
+      //cela devrait être égal à la grille initiale
+      expect(newGrid).toEqual(grid)
     })
 
     test("InfoLabel affiche la victoire d'un joueur", () => {
