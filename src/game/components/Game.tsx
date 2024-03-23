@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import Grid from "./Grid";
 import InfoLabel from "./InfoLabel";
+import {checkWinner} from "../utils/checkWinner";
 
 interface GameProps {
   player1: string
@@ -18,44 +19,12 @@ const Game = (props: GameProps) => {
   const [grid, setGrid] = React.useState<Array<Array<string>>>(Array.from({ length: NB_COLUMNS }, () => []))
   const [currentPlayer, setCurrentPlayer] = React.useState<string>('red')
 
-  const checkWinner = () => {
-    const directions = [
-      { x: 0, y: 1 },
-      { x: 1, y: 0 },
-      { x: 1, y: 1 },
-      { x: 1, y: -1 }
-    ];
-
-    for (let y = 0; y < NB_ROWS; y++) {
-      for (let x = 0; x < NB_COLUMNS; x++) {
-        const player = grid[y][x];
-        if (!player) continue;
-
-        for (const direction of directions) {
-          let count = 0;
-          let dx = x;
-          let dy = y;
-
-          while (count < 4) {
-            if (grid[dy]?.[dx] !== player) break;
-            dx += direction.x;
-            dy += direction.y;
-            count++;
-          }
-
-          if (count === 4) return player;
-        }
-      }
-    }
-
-    return null;
-  }
-
   const isColumnFull = (columnIndex: number) => {
     return grid[columnIndex].length >= NB_ROWS
   }
 
   const handleMove = (columnIndex: number) => {
+    console.log(grid)
     if (winner === '') {
       if (isColumnFull(columnIndex)) return
 
@@ -74,7 +43,7 @@ const Game = (props: GameProps) => {
   }
 
   useEffect(() => {
-    const win = checkWinner()
+    const win = checkWinner(grid)
     if (win) {
       const gagnant = currentPlayer === 'red' ? player2 : player1
       setWinner(gagnant)
