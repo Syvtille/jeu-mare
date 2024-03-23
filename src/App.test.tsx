@@ -63,6 +63,19 @@ describe('Tous les tests', () => {
       expect(newGrid).toEqual(grid)
     })
 
+    test('Le clique sur une colonne vide ajoute un pion', () => {
+      const { getByTestId } = render(<Game player1="Player 1" player2="Player 2"/>)
+
+      // Simuler un clic sur la première colonne
+      fireEvent.click(getByTestId('column-0'))
+
+      // Récupérer l'état de la grille après le clic
+      const grid = getByTestId('grid')
+
+      // Vérifier que le pion a bien été ajouté à la première colonne
+      expect(grid?.firstChild?.firstChild?.firstChild).toHaveClass('red')
+    })
+
     test("InfoLabel affiche la victoire d'un joueur", () => {
       const {getByText} = render(<InfoLabel currentPlayer={"on s'en fiche"} winner={"Bonjour"}/>)
       const playerTurn = getByText("Bonjour a gagné !")

@@ -14,12 +14,12 @@ const Grid = (props: GridProps) => {
 
   return (
     //on parcourt la grille pour afficher autant de Cell qu'elle a d'éléments en indiquant au composant Cell si il doit être rempli d'une certaine couleur
-    <div className="grid">
-      {Array.from({ length: nbColumns }).map((_, columnIndex) => (
-        //quand on clique sur une colonne
-        <div onClick={() => onMove(columnIndex)} key={columnIndex} className="column">
-          {Array.from({ length: nbRows }).map((_, rowIndex) => (
-            <Cell key={rowIndex} filledWith={currentGrid[columnIndex]?.[rowIndex]} />
+    <div data-testid="grid" className="grid">
+      {Array.from({length: nbColumns}).map((_, columnIndex) => (
+        <div data-testid={`column-${columnIndex}`} onClick={() => onMove(columnIndex)} key={columnIndex}
+             className="column">
+          {Array.from({length: nbRows}).map((_, rowIndex) => (
+            <Cell key={rowIndex} filledWith={currentGrid[columnIndex]?.[rowIndex]}/>
           ))}
         </div>
       ))}
