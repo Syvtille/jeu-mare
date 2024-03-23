@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Grid from "./Grid";
 
 const Game = () => {
@@ -11,10 +11,10 @@ const Game = () => {
 
   const checkWinner = () => {
     const directions = [
-      { x: 0, y: 1 }, // vertical
-      { x: 1, y: 0 }, // horizontal
-      { x: 1, y: 1 }, // diagonal down-right
-      { x: 1, y: -1 } // diagonal down-left
+      { x: 0, y: 1 },
+      { x: 1, y: 0 },
+      { x: 1, y: 1 },
+      { x: 1, y: -1 }
     ];
 
     for (let y = 0; y < NB_ROWS; y++) {
@@ -49,7 +49,6 @@ const Game = () => {
   const handleMove = (columnIndex: number) => {
     if (isColumnFull(columnIndex)) return
 
-    // Check if currentPlayer is not undefined
     if (currentPlayer) {
       const newGrid = grid.map((column, index) => {
         if (index === columnIndex) {
@@ -60,13 +59,18 @@ const Game = () => {
 
       setGrid(newGrid)
       setCurrentPlayer(currentPlayer === 'red' ? 'blue' : 'red')
-
-      const winner = checkWinner()
-      if (winner) {
-        alert(`Player ${winner} won!`)
-      }
     }
   }
+
+  useEffect(() => {
+    const winner = checkWinner()
+    if (winner) {
+      //TODO : ajouter un usestate indiquant qu'on ne peut plus jouer
+      setTimeout(() => {
+        alert(`Player ${winner} won!`)
+      }, 500)
+    }
+  }, [grid])
 
   return (
     <Grid nbRows={NB_ROWS} nbColumns={NB_COLUMNS} currentGrid={grid} onMove={handleMove}></Grid>

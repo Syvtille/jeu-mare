@@ -16,21 +16,21 @@
 .border-cell {
   width: 80px;
   height: 80px;
-  border: 1px solid black; /* Couleur de fond de la grille (couleur de votre choix) */
+  border: 1px solid black;
   position: relative;
   overflow: hidden;
 }
 
 .cell {
-  width: 70px; /* Plus petit que le .border-cell pour créer le bord */
+  width: 70px;
   height: 70px;
-  background-color: #F8F8F8; /* Couleur de fond de la grille (couleur de votre choix) */
+  background-color: #F8F8F8;
   border-radius: 50%;
   position: absolute;
-  border: 1px solid black; /* Couleur de fond de la grille (couleur de votre choix) */
+  border: 1px solid black;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Centrer le .cell dans le .border-cell */
+  transform: translate(-50%, -50%);
 }
 
 
