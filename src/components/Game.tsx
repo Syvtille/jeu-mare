@@ -6,7 +6,7 @@ const Game = () => {
   const NB_COLUMNS = 7;
   const NB_ROWS = 6;
 
-  const [grid, setGrid] = React.useState<Array<Array<string>>>([])
+  const [grid, setGrid] = React.useState<Array<Array<string>>>(Array.from({ length: NB_COLUMNS }, () => []))
   const [currentPlayer, setCurrentPlayer] = React.useState<string>('red')
 
   const checkWinner = () => {
