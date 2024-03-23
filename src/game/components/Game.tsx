@@ -1,11 +1,20 @@
 import React, {useEffect} from 'react'
 import Grid from "./Grid";
+import InfoLabel from "./InfoLabel";
 
-const Game = () => {
+interface GameProps {
+  player1: string
+  player2: string
+}
+
+const Game = (props: GameProps) => {
+
+  const {player1, player2} = props
 
   const NB_COLUMNS = 7;
   const NB_ROWS = 6;
 
+  const [winner, setWinner] = React.useState('')
   const [grid, setGrid] = React.useState<Array<Array<string>>>(Array.from({ length: NB_COLUMNS }, () => []))
   const [currentPlayer, setCurrentPlayer] = React.useState<string>('red')
 
@@ -65,15 +74,15 @@ const Game = () => {
   useEffect(() => {
     const winner = checkWinner()
     if (winner) {
-      //TODO : ajouter un usestate indiquant qu'on ne peut plus jouer
-      setTimeout(() => {
-        alert(`Player ${winner} won!`)
-      }, 500)
+      setWinner(currentPlayer)
     }
   }, [grid])
 
   return (
-    <Grid nbRows={NB_ROWS} nbColumns={NB_COLUMNS} currentGrid={grid} onMove={handleMove}></Grid>
+    <div>
+      <Grid nbRows={NB_ROWS} nbColumns={NB_COLUMNS} currentGrid={grid} onMove={handleMove}></Grid>
+      <InfoLabel currentPlayer={currentPlayer === 'red' ? player1 : player2} winner={winner !== '' ? winner : null} />
+    </div>
   )
 }
 
