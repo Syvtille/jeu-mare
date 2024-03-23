@@ -15,15 +15,27 @@ describe('Tous les tests', () => {
   })
 
   describe('Menu tests', () => {
+    test("Menu ne lance pas la partie si le nom de joueurs n'est pas renseigné", () => {
+      const handleStartGame = jest.fn()
+      const {getByText} = render(<Menu onStartGame={handleStartGame}/>)
+      const button = getByText('Lancer la partie')
+      //on clique sur le bouton sans renseigner les pseudos
+      fireEvent.click(button)
+      //on vérifie que la fonction onStartGame n'a pas été appelée
+      expect(handleStartGame).not.toHaveBeenCalled()
+    })
+
     test('Menu lance la partie avec le bon nom des joueurs', () => {
       const handleStartGame = jest.fn()
       const {getByPlaceholderText, getByText} = render(<Menu onStartGame={handleStartGame}/>)
       const button = getByText('Lancer la partie')
       const input1 = getByPlaceholderText('Pseudo joueur 1') as HTMLInputElement
       const input2 = getByPlaceholderText('Pseudo joueur 2') as HTMLInputElement
+      //On modifie les valeurs des inputs puis on clique sur le bouton
       fireEvent.change(input1, {target: {value: 'Player 1'}})
       fireEvent.change(input2, {target: {value: 'Player 2'}})
       fireEvent.click(button)
+      //on vérifie que la fonction onStartGame a bien été appelée avec les bons paramètres (pseudos des joueurs)
       expect(handleStartGame).toHaveBeenCalledWith('Player 1', 'Player 2')
     })
   })
@@ -52,8 +64,8 @@ describe('Tous les tests', () => {
     })
 
     test("InfoLabel affiche la victoire d'un joueur", () => {
-      const {getByText} = render(<InfoLabel currentPlayer={"on s'en fiche"} winner={"Florian"}/>)
-      const playerTurn = getByText("Florian a gagné !")
+      const {getByText} = render(<InfoLabel currentPlayer={"on s'en fiche"} winner={"Bonjour"}/>)
+      const playerTurn = getByText("Bonjour a gagné !")
       expect(playerTurn).toBeInTheDocument()
     })
 

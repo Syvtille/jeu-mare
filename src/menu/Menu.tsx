@@ -9,7 +9,14 @@ const Menu = (props: MenuProps) => {
   const [player2, setPlayer2] = useState('')
 
   const handleStartGame = () => {
-    props.onStartGame(player1, player2)
+    //on vérifie que les pseudos sont renseignés avant de lancer la partie
+    if (!player1 || !player2) {
+      alert('Veuillez renseigner les pseudos des joueurs')
+      return
+    }
+    else {
+      props.onStartGame(player1, player2)
+    }
   }
 
   return (
