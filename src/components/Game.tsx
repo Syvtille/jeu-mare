@@ -7,7 +7,7 @@ const Game = () => {
   const NB_ROWS = 6;
 
   const [grid, setGrid] = React.useState<Array<Array<string>>>([])
-  const [currentPlayer, setCurrentPlayer] = React.useState<string>()
+  const [currentPlayer, setCurrentPlayer] = React.useState<string>('red')
 
   const checkWinner = () => {
     const directions = [
@@ -49,19 +49,22 @@ const Game = () => {
   const handleMove = (columnIndex: number) => {
     if (isColumnFull(columnIndex)) return
 
-    const newGrid = grid.map((column, index) => {
-      if (index === columnIndex) {
-        return [...column, currentPlayer]
+    // Check if currentPlayer is not undefined
+    if (currentPlayer) {
+      const newGrid = grid.map((column, index) => {
+        if (index === columnIndex) {
+          return [...column, currentPlayer]
+        }
+        return column
+      })
+
+      setGrid(newGrid)
+      setCurrentPlayer(currentPlayer === 'red' ? 'blue' : 'red')
+
+      const winner = checkWinner()
+      if (winner) {
+        alert(`Player ${winner} won!`)
       }
-      return column
-    })
-
-    setGrid(newGrid)
-    setCurrentPlayer(currentPlayer === 'red' ? 'blue' : 'red')
-
-    const winner = checkWinner()
-    if (winner) {
-      alert(`Player ${winner} won!`)
     }
   }
 

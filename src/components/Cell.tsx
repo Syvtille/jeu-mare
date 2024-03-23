@@ -9,6 +9,7 @@ const Cell = (props: CellProps) => {
 
   return (
     <div className={"border-cell"}>
+      {!filledWith && <div className={"cell"}></div> }
       {filledWith && <div className={`cell ${filledWith}`}></div>}
     </div>
   )

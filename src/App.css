@@ -1,9 +1,38 @@
-.cell {
-
+.grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 50px;
+  background-color: #F7E0AB;
+  width: fit-content;
 }
+
+.column {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
 .border-cell {
-
+  width: 80px;
+  height: 80px;
+  border: 1px solid black; /* Couleur de fond de la grille (couleur de votre choix) */
+  position: relative;
+  overflow: hidden;
 }
+
+.cell {
+  width: 70px; /* Plus petit que le .border-cell pour créer le bord */
+  height: 70px;
+  background-color: #F8F8F8; /* Couleur de fond de la grille (couleur de votre choix) */
+  border-radius: 50%;
+  position: absolute;
+  border: 1px solid black; /* Couleur de fond de la grille (couleur de votre choix) */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centrer le .cell dans le .border-cell */
+}
+
 
 .red {
   background-color: red;
