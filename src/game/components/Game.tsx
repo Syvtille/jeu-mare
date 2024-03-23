@@ -37,10 +37,9 @@ const Game = (props: GameProps) => {
   }
 
   useEffect(() => {
-    const win = checkWinner(grid)
-    if (win) {
-      const gagnant = currentPlayer === 'red' ? player2 : player1
-      setWinner(gagnant)
+    const gagnant = checkWinner(grid)
+    if (gagnant) {
+      setWinner(gagnant === 'red' ? player1 : player2)
     }
   }, [currentPlayer, grid, player1, player2])
 
