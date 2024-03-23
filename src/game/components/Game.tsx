@@ -42,7 +42,7 @@ const Game = (props: GameProps) => {
       const gagnant = currentPlayer === 'red' ? player2 : player1
       setWinner(gagnant)
     }
-  }, [grid])
+  }, [currentPlayer, grid, player1, player2])
 
   return (
     <div>
