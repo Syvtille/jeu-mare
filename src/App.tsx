@@ -19,6 +19,7 @@ function App() {
         <h1>Puissance 4</h1>
         {!gameStarted && <Menu onStartGame={handleStartGame} />}
         {gameStarted && <Game player1={player1} player2={player2}/>}
+      <footer>Projet de : Lucas Nogueira, Florian Escande, Rémi Mahieux, Joseph Veys</footer>
     </div>
   );
 }
