@@ -88,3 +88,21 @@ h1 {
 .info-label .winner {
   /*color: red;*/
 }
+
+.replay-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.replay-button:hover {
+  background-color: #45a049;
+}

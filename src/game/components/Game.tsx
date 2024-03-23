@@ -56,25 +56,28 @@ const Game = (props: GameProps) => {
   }
 
   const handleMove = (columnIndex: number) => {
-    if (isColumnFull(columnIndex)) return
+    if (winner === '') {
+      if (isColumnFull(columnIndex)) return
 
-    if (currentPlayer) {
-      const newGrid = grid.map((column, index) => {
-        if (index === columnIndex) {
-          return [...column, currentPlayer]
-        }
-        return column
-      })
+      if (currentPlayer) {
+        const newGrid = grid.map((column, index) => {
+          if (index === columnIndex) {
+            return [...column, currentPlayer]
+          }
+          return column
+        })
 
-      setGrid(newGrid)
-      setCurrentPlayer(currentPlayer === 'red' ? 'blue' : 'red')
+        setGrid(newGrid)
+        setCurrentPlayer(currentPlayer === 'red' ? 'blue' : 'red')
+      }
     }
   }
 
   useEffect(() => {
-    const winner = checkWinner()
-    if (winner) {
-      setWinner(currentPlayer)
+    const win = checkWinner()
+    if (win) {
+      const gagnant = currentPlayer === 'red' ? player2 : player1
+      setWinner(gagnant)
     }
   }, [grid])
 

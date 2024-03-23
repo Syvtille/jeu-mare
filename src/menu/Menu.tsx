@@ -9,7 +9,7 @@ const Menu = (props: MenuProps) => {
   const [player2, setPlayer2] = useState('')
 
   const handleStartGame = () => {
-    console.log('Start game with players', player1, player2)
+    props.onStartGame(player1, player2)
   }
 
   return (
